@@ -3,7 +3,7 @@ import { Route, Switch, Link } from "react-router-dom"
 import './App.css';
 import * as yup from "yup"
 import Login from "./components/Login"
-import THC from "./components/THC"
+import Header from "./components/Header"
 import formSchema from "./components/formSchema";
 import { Button, Navbar } from 'reactstrap';
 
@@ -82,16 +82,7 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        {/*HEADER HERE*/}
-        <Navbar>
-          <Link to='/'>
-            <Button>Home</Button>
-          </Link>
-          <Link to='/Login'>
-            <Button>Login</Button>
-          </Link>
-        </Navbar>
-        <THC></THC>
+        <Header></Header>
         <Switch>
           <Route exact path={`/`}>
             {/* HOME PAGE*/}
