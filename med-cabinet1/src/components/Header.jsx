@@ -6,6 +6,7 @@ import THC from "./THC"
 export default function Header() {
     return (
         <div>
+        <h1>MED CABINET 1</h1>
         <Navbar>
           <Link to='/'>
             <Button>Home</Button>
