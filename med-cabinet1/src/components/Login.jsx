@@ -6,7 +6,8 @@ import {
   } from 'reactstrap';
 
 export default function Login(props) {
-    const {loginSubmit, onInputChange, errors} = props;
+    const {loginSubmit, onInputChange, errors, disabled} = props;
+    console.log(disabled)
     return (
         <Container className="login">
         <h2>Sign In</h2>
@@ -39,7 +40,7 @@ export default function Login(props) {
               />
             </FormGroup>
           </Col>
-          <Button>Submit</Button>
+          <Button disabled={disabled}>Submit</Button>
         </Form>
         </Container>
     )
