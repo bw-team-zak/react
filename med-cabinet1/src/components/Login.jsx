@@ -5,19 +5,25 @@ import {
     Button,
   } from 'reactstrap';
 
-export default function Login() {
+export default function Login(props) {
+    const {loginSubmit, onInputChange, errors} = props;
     return (
         <Container className="login">
         <h2>Sign In</h2>
-        <Form className="loginForm">
+        <div className="errors">
+          <div>{errors.email}</div>
+          <div>{errors.password}</div>
+        </div>
+        <Form className="loginForm" onSubmit={loginSubmit}>
           <Col>
             <FormGroup>
               <Label>Email</Label>
               <Input
                 type="email"
                 name="email"
-                id="exampleEmail"
-                placeholder="myemail@email.com"
+                id="email"
+                placeholder="youremail@email.com"
+                onChange={onInputChange}
               />
             </FormGroup>
           </Col>
@@ -29,6 +35,7 @@ export default function Login() {
                 name="password"
                 id="password"
                 placeholder="********"
+                onChange={onInputChange}
               />
             </FormGroup>
           </Col>
