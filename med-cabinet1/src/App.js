@@ -3,6 +3,7 @@ import { Route, Switch, Link } from "react-router-dom"
 import './App.css';
 import * as yup from "yup"
 import Login from "./components/Login"
+import THC from "./components/THC"
 import formSchema from "./components/formSchema";
 import { Button, Navbar } from 'reactstrap';
 
@@ -36,8 +37,10 @@ function App() {
     formSchema.isValid(loginData)
       .then(valid => {
         setDisabled(!valid)
+        console.log(valid)
       })
   }, [loginData])
+
 
   const onInputChange = event => {
     const { name } = event.target
@@ -65,11 +68,11 @@ function App() {
   const loginSubmit = event => {
     event.preventDefault()
 
-    const newUser = {
+    // const newUser = {
       // email: formData.email,
       // phone: formData.phone,
       // form to update state
-    }
+    // }
 
     // setcurrentUser({...newUser})
     // state update
@@ -88,6 +91,7 @@ function App() {
             <Button>Login</Button>
           </Link>
         </Navbar>
+        <THC></THC>
         <Switch>
           <Route exact path={`/`}>
             {/* HOME PAGE*/}
@@ -96,7 +100,8 @@ function App() {
             <Login 
               loginSubmit={loginSubmit}
               onInputChange={onInputChange}
-              errors={formErrors}></Login>
+              errors={formErrors}
+              disabled={disabled}></Login>
           </Route>
         </Switch>
       </div>
