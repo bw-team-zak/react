@@ -1,5 +1,4 @@
 import React from 'react'
-import THCimg from "./THCimg.png"
 
 export default function THC() {
     return (

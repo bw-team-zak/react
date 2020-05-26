@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Link } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
+import axios from "axios";
 import './App.css';
 import * as yup from "yup"
 import Login from "./components/Login"
 import Header from "./components/Header"
 import formSchema from "./components/formSchema";
-import { Button, Navbar } from 'reactstrap';
+
 
 
 const initialLoginData = {
@@ -37,7 +38,6 @@ function App() {
     formSchema.isValid(loginData)
       .then(valid => {
         setDisabled(!valid)
-        console.log(valid)
       })
   }, [loginData])
 
@@ -65,18 +65,31 @@ function App() {
       [name]: value})
   }
 
-  const loginSubmit = event => {
-    event.preventDefault()
-
-    // const newUser = {
-      // email: formData.email,
-      // phone: formData.phone,
-      // form to update state
-    // }
-
-    // setcurrentUser({...newUser})
-    // state update
+  const sendData = loginData => {
+    axios.post("https://med-cabinet1.herokuapp.com/api/users/login", loginData)
+    .then(data => {
+      console.log(data);
+      debugger
+    })
+    .catch(err => {
+      console.log(err);
+      debugger
+    })
   }
+
+  const loginSubmit = event => {
+    event.preventDefault();
+
+    const loginDatas = {
+      email: loginData.email,
+      password: loginData.password,
+    }
+
+    sendData(loginDatas);
+  }
+
+
+
 
 
   return (
