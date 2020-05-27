@@ -19,6 +19,47 @@ const initialLoginData = {
   password: "",
 };
 
+const initialFormData = {
+  name: "",
+  email: "",
+  password: "",
+  questionnaire: {
+
+  symptoms: {
+    pain: false, //includes headaches and cramps
+    depression: false,
+    insomnia: false,
+    stress: false,
+    lackOfAppetite: false,
+    nausea: false,
+    fatigue: false,
+    muscleSpasm: false,
+    eyePressure: false,
+    inflammation: false,
+    seizures: false,
+    other: false
+  },
+  race: {
+    race1: false,
+    race2: false,
+    race3: false,
+    race4: false
+  },
+  flavor: {
+    earthy: false, 
+    spicy: false,  // should include peppery
+    herbal: false, // should include flowery
+    citrus: false, // should include orange, lemon, tropical
+    sweet: false,  // should include berry, fruity
+    pine: false,   // should include woody
+    pungent: false,// should include chemicalm ammonia, deisel, skunky, cheese
+    nutty: false,
+    minty: false
+  }
+  }
+};
+
+
 const initialFormErrors = {
   name: "",
   email: "",
@@ -27,12 +68,48 @@ const initialFormErrors = {
   // tos: "",
 };
 
+const initialUserProfile = {
+  symptoms: {
+    pain: false, //includes headaches and cramps
+    depression: false,
+    insomnia: false,
+    stress: false,
+    lackOfAppetite: false,
+    nausea: false,
+    fatigue: false,
+    muscleSpasm: false,
+    eyePressure: false,
+    inflammation: false,
+    seizures: false,
+    other: false
+  },
+  race: {
+    indica: false,
+    sativa: false,
+    hybrid: false
+  },
+  flavor: {
+    earthy: false, 
+    spicy: false,  // should include peppery
+    herbal: false, // should include flowery
+    citrus: false, // should include orange, lemon, tropical
+    sweet: false,  // should include berry, fruity
+    pine: false,   // should include woody
+    pungent: false,// should include chemicalm ammonia, deisel, skunky, cheese
+    nutty: false,
+    minty: false
+  }
+}
+
 const initialDisabled = true;
 
 function App() {
   const [loginData, setloginData] = useState(initialLoginData);
+  const [formData, setformData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
+  const [userProfile, setuserProfile] = useState(initialUserProfile);
+  const [activeTab, setActiveTab] = useState('1');
 
   useEffect(() => {
     formSchema.isValid(loginData).then((valid) => {
@@ -64,19 +141,63 @@ function App() {
       [name]: value,
     });
   };
+  
+  const onSymptomsCheckboxChange = evt => {
+    const { name } = evt.target
+    const { checked } = evt.target
+    setformData({
+      ...formData,
+      questionnaire: {
+        ...formData.questionnaire,
+        symptoms: {
+          ...formData.questionnaire.symptoms, 
+          [name]: checked, 
+        }
+      }
+    })
+  }
 
-  const sendData = (loginData) => {
-    axios
-      .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
-      .then((data) => {
-        console.log(data);
-        debugger;
-      })
-      .catch((err) => {
-        console.log(err);
-        debugger;
-      });
-  };
+  const onRaceRadioChange = evt => {
+    const { name } = evt.target
+    const { value } = evt.target
+    setformData({
+      ...formData,
+      questionnaire: {
+        ...formData.questionnaire,
+        race: {
+          ...formData.questionnaire.race, 
+          [name]: value, 
+        }
+      }
+    })
+  }
+
+  const onFlavorCheckboxChange = evt => {
+    const { name } = evt.target
+    const { checked } = evt.target
+    setformData({
+      ...formData,
+      questionnaire: {
+        ...formData.questionnaire,
+        flavor: {
+          ...formData.questionnaire.flavor, 
+          [name]: checked, 
+        }
+      }
+    })
+  }
+
+  const sendData = loginData => {
+    axios.post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
+    .then(data => {
+      console.log(data);
+      debugger
+    })
+    .catch(err => {
+      console.log(err);
+      debugger
+    })
+  }
 
   const loginSubmit = (event) => {
     event.preventDefault();
@@ -101,7 +222,16 @@ function App() {
             <Browse></Browse>
           </Route>
           <Route path={`/Questionnaire`}>
-            <Questionnaire></Questionnaire>
+            <Questionnaire 
+              values={formData}
+              errors={formErrors}
+              onInputChange={onInputChange}
+              activeTab={activeTab} 
+              setActiveTab={setActiveTab}
+              onSymptomsCheckboxChange={onSymptomsCheckboxChange}
+              onRaceRadioChange={onRaceRadioChange}
+              onFlavorCheckboxChange={onFlavorCheckboxChange}
+              ></Questionnaire>
           </Route>
           <Route path={"/Login"}>
             <Login
