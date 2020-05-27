@@ -7,7 +7,6 @@ import {
 
 export default function Login(props) {
     const {loginSubmit, onInputChange, errors, disabled} = props;
-    console.log(disabled)
     return (
         <Container className="login">
         <h2>Sign In</h2>

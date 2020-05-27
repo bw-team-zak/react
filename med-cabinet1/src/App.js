@@ -66,7 +66,7 @@ function App() {
   }
 
   const sendData = loginData => {
-    axios.post("https://med-cabinet1.herokuapp.com/api/users/login", loginData)
+    axios.post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
     .then(data => {
       console.log(data);
       debugger
@@ -81,7 +81,7 @@ function App() {
     event.preventDefault();
 
     const loginDatas = {
-      email: loginData.email,
+      username: loginData.email,
       password: loginData.password,
     }
 
