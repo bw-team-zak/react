@@ -5,8 +5,11 @@ import "./App.css";
 import * as yup from "yup";
 import Login from "./components/Login";
 import Header from "./components/Header";
+import Home from "./components/Home"
 import formSchema from "./components/formSchema";
 import Registration from "./components/Registration";
+import Questionnaire from "./components/Questionnaire";
+import Browse from "./components/Browse"
 
 const initialLoginData = {
   email: "",
@@ -87,7 +90,13 @@ function App() {
         <Header></Header>
         <Switch>
           <Route exact path={`/`}>
-            {/* HOME PAGE*/}
+            <Home></Home>
+          </Route>
+          <Route path={`/Browse`}>
+            <Browse></Browse>
+          </Route>
+          <Route path={`/Questionnaire`}>
+            <Questionnaire></Questionnaire>
           </Route>
           <Route path={"/Login"}>
             <Login

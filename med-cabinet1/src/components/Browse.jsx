@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Questionnaire() {
+export default function Browse() {
     return (
         <div>
-            <h1>Questionnaire</h1>
+            <h1>BROWSE ALL</h1>
         </div>
     )
 }
