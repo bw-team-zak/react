@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,14 +15,37 @@ code {
     monospace;
 }
 
+* {
+  font-family: 'Righteous', cursive;
+}
+
 .App {
-  background-color: #2D5439;
+  background-image: url("./components/photos/background.jpg");
+  background-color: #cccccc; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
 }
 
 .wrapper {
   margin: 0% 10%;
   padding: 10% 0%;
-  background-color: #95775D;
+  background-color: #059033;
   border-radius: 20px;
-  /* opacity: 50%; */
+  opacity: 85%;
+}
+
+.logo  {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+}
+
+.logo img {
+  width: 20%;
+}
+
+h1 {
+  font-weight: bold;
 }

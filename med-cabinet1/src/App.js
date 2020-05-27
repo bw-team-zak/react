@@ -55,28 +55,26 @@ function App() {
       });
     setloginData({
       ...loginData,
-      [name]: value,
-    });
-  };
+      [name]: value})
+  }
 
-  const sendData = (loginData) => {
-    axios
-      .post("https://med-cabinet1.herokuapp.com/api/users/login", loginData)
-      .then((data) => {
-        console.log(data);
-        debugger;
-      })
-      .catch((err) => {
-        console.log(err);
-        debugger;
-      });
-  };
+  const sendData = loginData => {
+    axios.post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
+    .then(data => {
+      console.log(data);
+      debugger
+    })
+    .catch(err => {
+      console.log(err);
+      debugger
+    })
+  }
 
   const loginSubmit = (event) => {
     event.preventDefault();
 
     const loginDatas = {
-      email: loginData.email,
+      username: loginData.email,
       password: loginData.password,
     };
 
