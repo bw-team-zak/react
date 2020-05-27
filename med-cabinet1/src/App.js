@@ -1,65 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom"
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
-import './App.css';
-import * as yup from "yup"
-import Login from "./components/Login"
-import Header from "./components/Header"
+import "./App.css";
+import * as yup from "yup";
+import Login from "./components/Login";
+import Header from "./components/Header";
 import formSchema from "./components/formSchema";
-
-
+import Registration from "./components/Registration";
 
 const initialLoginData = {
   email: "",
   password: "",
-  }
-  
-  const initialFormErrors = {
+};
+
+const initialFormErrors = {
   name: "",
   email: "",
   password: "",
   // role: "",
   // tos: "",
-  }
-  
-  const initialDisabled = true;
+};
 
+const initialDisabled = true;
 
 function App() {
-
-
   const [loginData, setloginData] = useState(initialLoginData);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
 
-
-
   useEffect(() => {
-    formSchema.isValid(loginData)
-      .then(valid => {
-        setDisabled(!valid)
-      })
-  }, [loginData])
+    formSchema.isValid(loginData).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [loginData]);
 
-
-  const onInputChange = event => {
-    const { name } = event.target
-    const { value } = event.target
+  const onInputChange = (event) => {
+    const { name } = event.target;
+    const { value } = event.target;
 
     yup
       .reach(formSchema, name)
       .validate(value)
-      .then(valid => {
+      .then((valid) => {
         setFormErrors({
           ...formErrors,
-          [name]: ""})
+          [name]: "",
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         setFormErrors({
           ...formErrors,
-          [name]: err.errors[0]
-        })
-      })
+          [name]: err.errors[0],
+        });
+      });
     setloginData({
       ...loginData,
       [name]: value})
@@ -77,20 +70,16 @@ function App() {
     })
   }
 
-  const loginSubmit = event => {
+  const loginSubmit = (event) => {
     event.preventDefault();
 
     const loginDatas = {
       username: loginData.email,
       password: loginData.password,
-    }
+    };
 
     sendData(loginDatas);
-  }
-
-
-
-
+  };
 
   return (
     <div className="App">
@@ -101,11 +90,15 @@ function App() {
             {/* HOME PAGE*/}
           </Route>
           <Route path={"/Login"}>
-            <Login 
+            <Login
               loginSubmit={loginSubmit}
               onInputChange={onInputChange}
               errors={formErrors}
-              disabled={disabled}></Login>
+              disabled={disabled}
+            ></Login>
+          </Route>
+          <Route path="/Registration">
+            <Registration />
           </Route>
         </Switch>
       </div>
