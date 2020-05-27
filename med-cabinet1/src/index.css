@@ -17,9 +17,10 @@ code {
 
 * {
   font-family: 'Righteous', cursive;
+  /* border: 1px solid black; */
 }
 
-.App {
+body {
   background-image: url("./components/photos/background.jpg");
   background-color: #cccccc; 
   background-position: center; 
@@ -28,18 +29,26 @@ code {
 }
 
 .wrapper {
-  margin: 0% 10%;
-  padding: 10% 0%;
+  margin: 2% 10%;
+  padding: 1% 0%;
   background-color: #059033;
   border-radius: 20px;
   opacity: 85%;
 }
 
+.header {
+  padding-bottom: 1%;
+  margin-bottom: 2%;
+  border-bottom: 1px solid black;
+}
+
 .logo  {
+  margin: 0% 3%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-
+  border: 1px solid black;
+  border-style: none none solid none;
 }
 
 .logo img {
@@ -48,4 +57,44 @@ code {
 
 h1 {
   font-weight: bold;
+}
+
+.thcHelp {
+  display: flex;
+  align-items: center;
+}
+
+.helpH2 {
+  font-size: 225%;
+  width: 50%;
+  font-weight: bold;
+}
+
+.homeWrapper {
+  display: flex;
+  margin: 0% 3%;
+}
+
+.homeLeft {
+  width: 35%;
+  padding: 0% 1%;
+}
+
+.homeUser {
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.rec {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+
+}
+
+.yourRec {
+  font-size: 150%;
+  border: 1px solid black;
+  border-style: solid none solid none;
 }
