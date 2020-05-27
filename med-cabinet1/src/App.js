@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import Header from "./components/Header";
 import formSchema from "./components/formSchema";
 import Registration from "./components/Registration";
+import { ProtectedRoute } from "./components/assets/ProtectedRoute";
+import { TEST } from "./components/TEST_LOGIN";
 
 const initialLoginData = {
   email: "",
@@ -55,20 +57,22 @@ function App() {
       });
     setloginData({
       ...loginData,
-      [name]: value})
-  }
+      [name]: value,
+    });
+  };
 
-  const sendData = loginData => {
-    axios.post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
-    .then(data => {
-      console.log(data);
-      debugger
-    })
-    .catch(err => {
-      console.log(err);
-      debugger
-    })
-  }
+  const sendData = (loginData) => {
+    axios
+      .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
+      .then((data) => {
+        console.log(data);
+        debugger;
+      })
+      .catch((err) => {
+        console.log(err);
+        debugger;
+      });
+  };
 
   const loginSubmit = (event) => {
     event.preventDefault();
@@ -100,6 +104,7 @@ function App() {
           <Route path="/Registration">
             <Registration />
           </Route>
+          <ProtectedRoute path="/Protected" component={<TEST />} />
         </Switch>
       </div>
     </div>
