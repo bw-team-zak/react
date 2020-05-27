@@ -20,15 +20,19 @@ code {
 }
 
 .App {
-  background-color: #2D5439;
+  background-image: url("./components/photos/background.jpg");
+  background-color: #cccccc; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
 }
 
 .wrapper {
   margin: 0% 10%;
   padding: 10% 0%;
-  background-color: #95775D;
+  background-color: #059033;
   border-radius: 20px;
-  /* opacity: 50%; */
+  opacity: 85%;
 }
 
 .logo  {

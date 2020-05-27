@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Navbar } from "reactstrap";
 import THC from "./THC";
-import logo from "./logo.png";
+import logo from "./photos/logo.png";
 
 export default function Header() {
   return (
