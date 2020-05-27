@@ -10,7 +10,11 @@ const formSchema = yup.object().shape({
       .required("The email is a required field"),
     password: yup.string()
       .min(8, "Your password must be at least 10 characters")
-      .required("Password is a required field")
+      .required("Password is a required field"),
+    race1: yup.string(),
+    race2: yup.string(),
+    race3: yup.string(),
+    race4: yup.string()
   })
 
   export default formSchema
