@@ -17,6 +17,7 @@ code {
 
 * {
   font-family: 'Righteous', cursive;
+  text-align: center;
   /* border: 1px solid black; */
 }
 
@@ -26,6 +27,7 @@ body {
   background-position: center; 
   background-repeat: no-repeat; 
   background-size: cover; 
+  height: 100%;
 }
 
 .wrapper {
@@ -97,4 +99,24 @@ h1 {
   font-size: 150%;
   border: 1px solid black;
   border-style: solid none solid none;
+}
+
+.wrapper .tab-content .active{
+  display: flex; 
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* justify-items: center; */
+}
+
+
+
+.quest {
+  width: 100%;
+}
+
+.nav-tabs {
+  display: flex;
+  justify-content: center;
 }
