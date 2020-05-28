@@ -1,32 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 * {
-  font-family: 'Righteous', cursive;
+  font-family: "Righteous", cursive;
   text-align: center;
   /* border: 1px solid black; */
 }
 
 body {
   background-image: url("./components/photos/background.jpg");
-  background-color: #cccccc; 
-  background-position: center; 
-  background-repeat: no-repeat; 
-  background-size: cover; 
+  background-color: #cccccc;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
 }
 
@@ -35,7 +34,7 @@ body {
   padding: 1% 0%;
   background-color: #059033;
   border-radius: 20px;
-  opacity: 85%;
+  opacity: 0.8;
 }
 
 .header {
@@ -44,7 +43,7 @@ body {
   border-bottom: 1px solid black;
 }
 
-.logo  {
+.logo {
   margin: 0% 3%;
   display: flex;
   justify-content: center;
@@ -92,7 +91,6 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-items: center;
-
 }
 
 .yourRec {
@@ -101,16 +99,14 @@ h1 {
   border-style: solid none solid none;
 }
 
-.wrapper .tab-content .active{
-  display: flex; 
+.wrapper .tab-content .active {
+  display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   /* justify-items: center; */
 }
-
-
 
 .quest {
   width: 100%;
