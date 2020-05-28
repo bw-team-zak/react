@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { locations } from "./assets/locations";
 import { conditions1, conditions2, conditions3 } from "./assets/conditions";
+import { connect } from "react-redux";
+import { postNewUser } from "../actions/registerAction";
 
 const initForm = {
   username: "",
@@ -11,19 +13,24 @@ const initForm = {
   experienced: null,
 };
 
-export default function Registration() {
+const Registration = (props) => {
   const [form, setForm] = useState(initForm);
+  const { postNewUser } = props;
 
-  const changeHandle = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+  const changeHandle = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
     setForm({
       ...form,
       [name]: value,
     });
   };
+  const submitHandle = (e) => {
+    e.preventDefault();
+    postNewUser(form);
+  };
   return (
-    <div>
+    <div onSubmit={submitHandle}>
       <form style={{ display: "flex", flexWrap: "wrap" }}>
         <label>
           Username:
@@ -57,78 +64,6 @@ export default function Registration() {
             })}
           </select>
         </label>
-        <label style={{ margin: "0 auto", width: "100%" }}>
-          <span style={{ color: "red" }}>*</span>Medical Condition(s)
-          <div
-            style={{
-              display: "flex",
-              width: "90%",
-              justifyContent: "space-between",
-              margin: "0 auto",
-            }}
-          >
-            <div
-              style={{
-                width: "30%",
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "right",
-              }}
-            >
-              {conditions1.map((condition) => (
-                <label>
-                  {condition}
-                  <input
-                    type="checkbox"
-                    name="med_condition"
-                    onChange={changeHandle}
-                    value={condition}
-                  />
-                </label>
-              ))}
-            </div>
-            <div
-              style={{
-                width: "39%",
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "right",
-              }}
-            >
-              {conditions3.map((condition) => (
-                <label>
-                  {condition}
-                  <input
-                    type="checkbox"
-                    name="med_condition"
-                    onChange={changeHandle}
-                    value={condition}
-                  />
-                </label>
-              ))}
-            </div>
-            <div
-              style={{
-                width: "30%",
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "right",
-              }}
-            >
-              {conditions2.map((condition) => (
-                <label>
-                  {condition}
-                  <input
-                    type="checkbox"
-                    name="med_condition"
-                    onChange={changeHandle}
-                    value={condition}
-                  />
-                </label>
-              ))}
-            </div>
-          </div>
-        </label>
         <label htmlFor="age">
           <span style={{ color: "red" }}>*</span>Age:
           <input
@@ -151,4 +86,6 @@ export default function Registration() {
       </form>
     </div>
   );
-}
+};
+
+export default connect(null, { postNewUser })(Registration);

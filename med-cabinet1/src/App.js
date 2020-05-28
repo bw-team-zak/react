@@ -8,8 +8,11 @@ import Header from "./components/Header";
 import Home from "./components/Home"
 import formSchema from "./components/formSchema";
 import Registration from "./components/Registration";
+import { ProtectedRoute } from "./components/assets/ProtectedRoute";
+import { TEST } from "./components/TEST_LOGIN";
 import Questionnaire from "./components/Questionnaire";
 import Browse from "./components/Browse"
+
 
 const initialLoginData = {
   email: "",
@@ -135,9 +138,10 @@ function App() {
       });
     setloginData({
       ...loginData,
-      [name]: value})
-  }
-
+      [name]: value,
+    });
+  };
+  
   const onSymptomsCheckboxChange = evt => {
     const { name } = evt.target
     const { checked } = evt.target
@@ -240,6 +244,7 @@ function App() {
           <Route path="/Registration">
             <Registration />
           </Route>
+          <ProtectedRoute path="/Protected" component={<TEST />} />
         </Switch>
       </div>
     </div>
