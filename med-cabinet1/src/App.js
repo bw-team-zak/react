@@ -16,51 +16,6 @@ import Browse from "./components/Browse";
 import { postNewUser } from "./actions/registerAction";
 import LoginRegistration from "./components/LoginRegistration";
 
-// const initialLoginData = {
-//   username: "",
-//   usernameLogin: "",
-//   password: "",
-//   passwordLogin: "",
-//   location: "",
-//   med_condition: null,
-//   age: "",
-//   experienced: null,
-//   tos: "",
-//   questionnaire: {
-//     symptoms: {
-//       pain: false, //includes headaches and cramps
-//       depression: false,
-//       insomnia: false,
-//       stress: false,
-//       lackOfAppetite: false,
-//       nausea: false,
-//       fatigue: false,
-//       muscleSpasm: false,
-//       eyePressure: false,
-//       inflammation: false,
-//       seizures: false,
-//       other: false,
-//     },
-//     race: {
-//       race1: false,
-//       race2: false,
-//       race3: false,
-//       race4: false,
-//     },
-//     flavor: {
-//       earthy: false,
-//       spicy: false, // should include peppery
-//       herbal: false, // should include flowery
-//       citrus: false, // should include orange, lemon, tropical
-//       sweet: false, // should include berry, fruity
-//       pine: false, // should include woody
-//       pungent: false, // should include chemicalm ammonia, deisel, skunky, cheese
-//       nutty: false,
-//       minty: false,
-//     }
-//   }
-// };
-
 const initialFormData = {
   username: "",
   usernameLogin: "",
@@ -116,39 +71,6 @@ const initialFormErrors = {
   tos: ""
 };
 
-
-// const initialUserProfile = { // ARE WE GOING TO USE THIS OR DO YOU HAVE A PROFILE STATE?
-//   symptoms: {
-//     pain: false, //includes headaches and cramps
-//     depression: false,
-//     insomnia: false,
-//     stress: false,
-//     lackOfAppetite: false,
-//     nausea: false,
-//     fatigue: false,
-//     muscleSpasm: false,
-//     eyePressure: false,
-//     inflammation: false,
-//     seizures: false,
-//     other: false,
-//   },
-//   race: {
-//     indica: false,
-//     sativa: false,
-//     hybrid: false,
-//   },
-//   flavor: {
-//     earthy: false,
-//     spicy: false, // should include peppery
-//     herbal: false, // should include flowery
-//     citrus: false, // should include orange, lemon, tropical
-//     sweet: false, // should include berry, fruity
-//     pine: false, // should include woody
-//     pungent: false, // should include chemicalm ammonia, deisel, skunky, cheese
-//     nutty: false,
-//     minty: false,
-//   },
-// };
 
 const initialDisabled = true;
 
@@ -280,6 +202,7 @@ function App() {
     axios
       .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
       .then((res) => {
+        debugger
         console.log(res);
         localStorage.setItem("token", res.data.token);
         push("/Protected");
@@ -300,6 +223,46 @@ function App() {
     };
 
     sendData(loginDatas);
+  };
+
+  const questionnaireSubmit = (event) => {
+    event.preventDefault();
+    debugger
+    const questionnaireData = {
+      username: formData.username,
+      symptoms: {
+        pain: formData.questionnaire.symptoms.pain,
+        insomnia: formData.questionnaire.symptoms.insomnia,
+        stress: formData.questionnaire.symptoms.stress,
+        lackOfAppetite: formData.questionnaire.symptoms.lackOfAppetite,
+        nausea: formData.questionnaire.symptoms.nausea,
+        fatigue: formData.questionnaire.symptoms.fatigue,
+        muscleSpasm: formData.questionnaire.symptoms.muscleSpasm,
+        eyePressure: formData.questionnaire.symptoms.eyePressure,
+        inflammation: formData.questionnaire.symptoms.inflammation,
+        seizure: formData.questionnaire.symptoms.seizures,
+        other: formData.questionnaire.symptoms.other,
+        },
+      race: {
+        race1: formData.questionnaire.race.race1,
+        race2: formData.questionnaire.race.race2,
+        race3: formData.questionnaire.race.race3,
+        race4: formData.questionnaire.race.race4
+        },
+      flavor: {
+        earthy: formData.questionnaire.flavor.earthy,
+        spicy: formData.questionnaire.flavor.spicy,
+        herbal: formData.questionnaire.flavor.herbal,
+        citrus: formData.questionnaire.flavor.citrus,
+        sweet: formData.questionnaire.flavor.sweet,
+        pine: formData.questionnaire.flavor.pine,
+        pungent: formData.questionnaire.flavor.pungent,
+        nutty: formData.questionnaire.flavor.nutty,
+        minty: formData.questionnaire.flavor.minty
+      }
+    };
+
+    sendData(questionnaireData);
   };
 
   const submitHandle = (e) => { //please adjust as needed
@@ -329,6 +292,7 @@ function App() {
               onSymptomsCheckboxChange={onSymptomsCheckboxChange}
               onRaceRadioChange={onRaceRadioChange}
               onFlavorCheckboxChange={onFlavorCheckboxChange}
+              questionnaireSubmit={questionnaireSubmit}
             ></Questionnaire>
           </Route>
           <Route path={"/LoginRegistration"}>
@@ -344,22 +308,7 @@ function App() {
               activeTab={activeTab2}
               setActiveTab={setActiveTab2}
             ></LoginRegistration>
-            {/* <Login
-              loginSubmit={loginSubmit}
-              onInputChange={onInputChange}
-              errors={formErrors}
-              disabled={disabled}
-            ></Login> */}
           </Route>
-          {/* <Route path="/Registration">
-            <Registration
-            values={formData} 
-            onInputChange={onInputChangeRegistration}
-            errors={formErrors}
-            disabled={disabled2}
-            submitHandle={submitHandle}
-            onCheckboxChange={onCheckboxChange}/>
-          </Route> */}
           <ProtectedRoute path="/Protected" component={TEST} />
         </Switch>
       </div>
