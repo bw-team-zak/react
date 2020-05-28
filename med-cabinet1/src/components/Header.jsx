@@ -21,11 +21,11 @@ export default function Header() {
         <Link to="/Questionnaire">
           <Button>Questionnaire</Button>
         </Link>
-        <Link to="/Registration">
+        {/* <Link to="/Registration">
           <Button>Registration</Button>
-        </Link>
-        <Link to="/Login">
-          <Button>Login</Button>
+        </Link> */}
+        <Link to="/LoginRegistration">
+          <Button>Login/Register</Button>
         </Link>
       </Navbar>
       <THC></THC>

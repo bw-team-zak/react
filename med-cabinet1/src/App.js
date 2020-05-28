@@ -14,6 +14,7 @@ import { TEST } from "./components/TEST_LOGIN";
 import Questionnaire from "./components/questionnaire";
 import Browse from "./components/Browse";
 import { postNewUser } from "./actions/registerAction";
+import LoginRegistration from "./components/LoginRegistration";
 
 // const initialLoginData = {
 //   username: "",
@@ -159,6 +160,7 @@ function App() {
   const [disabled2, setDisabled2] = useState(initialDisabled)
   // const [userProfile, setuserProfile] = useState(initialUserProfile);
   const [activeTab, setActiveTab] = useState("1");
+  const [activeTab2, setActiveTab2] = useState("1");
   const { push } = useHistory();
 
   useEffect(() => {
@@ -329,15 +331,27 @@ function App() {
               onFlavorCheckboxChange={onFlavorCheckboxChange}
             ></Questionnaire>
           </Route>
-          <Route path={"/Login"}>
-            <Login
+          <Route path={"/LoginRegistration"}>
+            <LoginRegistration
+              loginSubmit={loginSubmit}
+              onInputChange={onInputChange}
+              onInputChangeRegistration={onInputChangeRegistration}
+              errors={formErrors}
+              disabled={disabled}
+              disabled2={disabled2} 
+              submitHandle={submitHandle}
+              onCheckboxChange={onCheckboxChange}
+              activeTab={activeTab2}
+              setActiveTab={setActiveTab2}
+            ></LoginRegistration>
+            {/* <Login
               loginSubmit={loginSubmit}
               onInputChange={onInputChange}
               errors={formErrors}
               disabled={disabled}
-            ></Login>
+            ></Login> */}
           </Route>
-          <Route path="/Registration">
+          {/* <Route path="/Registration">
             <Registration
             values={formData} 
             onInputChange={onInputChangeRegistration}
@@ -345,7 +359,7 @@ function App() {
             disabled={disabled2}
             submitHandle={submitHandle}
             onCheckboxChange={onCheckboxChange}/>
-          </Route>
+          </Route> */}
           <ProtectedRoute path="/Protected" component={TEST} />
         </Switch>
       </div>
