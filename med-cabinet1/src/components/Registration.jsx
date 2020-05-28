@@ -30,8 +30,11 @@ const Registration = (props) => {
     postNewUser(form);
   };
   return (
-    <div onSubmit={submitHandle}>
-      <form style={{ display: "flex", flexWrap: "wrap" }}>
+    <div>
+      <form
+        onSubmit={submitHandle}
+        style={{ display: "flex", flexWrap: "wrap" }}
+      >
         <label>
           Username:
           <input
@@ -83,6 +86,7 @@ const Registration = (props) => {
             <option value={false}>No</option>
           </select>
         </label>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
