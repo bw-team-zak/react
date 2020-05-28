@@ -229,7 +229,6 @@ function App() {
     event.preventDefault();
     debugger
     const questionnaireData = {
-      username: formData.username,
       symptoms: {
         pain: formData.questionnaire.symptoms.pain,
         insomnia: formData.questionnaire.symptoms.insomnia,
