@@ -26,6 +26,7 @@ export default function Questionnaire(props) {
     onSymptomsCheckboxChange,
     onRaceRadioChange,
     onFlavorCheckboxChange,
+    questionnaireSubmit
   } = props;
 
   const toggle = (tab) => {
@@ -449,7 +450,7 @@ export default function Questionnaire(props) {
           </Row>
         </TabPane>
       </TabContent>
-      <Button>Submit</Button>
+      <Button onSubmit={questionnaireSubmit}>Submit</Button>
     </div>
   );
 }
