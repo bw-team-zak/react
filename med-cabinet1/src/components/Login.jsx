@@ -25,7 +25,7 @@ export default function Login(props) {
       <Form className="loginForm" onSubmit={loginSubmit}>
         <Col>
           <FormGroup>
-            <Label>username</Label>
+            <Label>Username</Label>
             <Input
               type="text"
               name="usernameLogin"
