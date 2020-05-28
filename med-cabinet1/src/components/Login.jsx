@@ -10,7 +10,11 @@ import {
 } from "reactstrap";
 
 export default function Login(props) {
-  const { loginSubmit, onInputChange, errors, disabled } = props;
+  const { 
+    loginSubmit, 
+    onInputChange, 
+    errors, 
+    disabled } = props;
   return (
     <Container className="login">
       <h2>Sign In</h2>
@@ -24,8 +28,8 @@ export default function Login(props) {
             <Label>username</Label>
             <Input
               type="text"
-              name="username"
-              id="username"
+              name="usernameLogin"
+              id="usernameLogin"
               placeholder="Username"
               onChange={onInputChange}
             />
@@ -36,8 +40,8 @@ export default function Login(props) {
             <Label for="password">Password</Label>
             <Input
               type="password"
-              name="password"
-              id="password"
+              name="passwordLogin"
+              id="passwordLogin"
               placeholder="********"
               onChange={onInputChange}
             />
