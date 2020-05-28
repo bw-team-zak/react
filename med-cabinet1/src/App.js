@@ -1,68 +1,65 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import * as yup from "yup";
 import Login from "./components/Login";
 import Header from "./components/Header";
-import Home from "./components/Home"
+import Home from "./components/Home";
 import formSchema from "./components/formSchema";
 import Registration from "./components/Registration";
 import { ProtectedRoute } from "./components/assets/ProtectedRoute";
 import { TEST } from "./components/TEST_LOGIN";
-import Questionnaire from "./components/Questionnaire";
-import Browse from "./components/Browse"
-
+import Questionnaire from "./components/questionnaire";
+import Browse from "./components/Browse";
 
 const initialLoginData = {
-  email: "",
+  username: "",
   password: "",
 };
 
 const initialFormData = {
   name: "",
-  email: "",
+  username: "",
   password: "",
   questionnaire: {
-
-  symptoms: {
-    pain: false, //includes headaches and cramps
-    depression: false,
-    insomnia: false,
-    stress: false,
-    lackOfAppetite: false,
-    nausea: false,
-    fatigue: false,
-    muscleSpasm: false,
-    eyePressure: false,
-    inflammation: false,
-    seizures: false,
-    other: false
+    symptoms: {
+      pain: false, //includes headaches and cramps
+      depression: false,
+      insomnia: false,
+      stress: false,
+      lackOfAppetite: false,
+      nausea: false,
+      fatigue: false,
+      muscleSpasm: false,
+      eyePressure: false,
+      inflammation: false,
+      seizures: false,
+      other: false,
+    },
+    race: {
+      race1: false,
+      race2: false,
+      race3: false,
+      race4: false,
+    },
+    flavor: {
+      earthy: false,
+      spicy: false, // should include peppery
+      herbal: false, // should include flowery
+      citrus: false, // should include orange, lemon, tropical
+      sweet: false, // should include berry, fruity
+      pine: false, // should include woody
+      pungent: false, // should include chemicalm ammonia, deisel, skunky, cheese
+      nutty: false,
+      minty: false,
+    },
   },
-  race: {
-    race1: false,
-    race2: false,
-    race3: false,
-    race4: false
-  },
-  flavor: {
-    earthy: false, 
-    spicy: false,  // should include peppery
-    herbal: false, // should include flowery
-    citrus: false, // should include orange, lemon, tropical
-    sweet: false,  // should include berry, fruity
-    pine: false,   // should include woody
-    pungent: false,// should include chemicalm ammonia, deisel, skunky, cheese
-    nutty: false,
-    minty: false
-  }
-  }
 };
-
 
 const initialFormErrors = {
   name: "",
-  email: "",
+  username: "",
   password: "",
   // role: "",
   // tos: "",
@@ -81,25 +78,25 @@ const initialUserProfile = {
     eyePressure: false,
     inflammation: false,
     seizures: false,
-    other: false
+    other: false,
   },
   race: {
     indica: false,
     sativa: false,
-    hybrid: false
+    hybrid: false,
   },
   flavor: {
-    earthy: false, 
-    spicy: false,  // should include peppery
+    earthy: false,
+    spicy: false, // should include peppery
     herbal: false, // should include flowery
     citrus: false, // should include orange, lemon, tropical
-    sweet: false,  // should include berry, fruity
-    pine: false,   // should include woody
-    pungent: false,// should include chemicalm ammonia, deisel, skunky, cheese
+    sweet: false, // should include berry, fruity
+    pine: false, // should include woody
+    pungent: false, // should include chemicalm ammonia, deisel, skunky, cheese
     nutty: false,
-    minty: false
-  }
-}
+    minty: false,
+  },
+};
 
 const initialDisabled = true;
 
@@ -109,7 +106,8 @@ function App() {
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
   const [userProfile, setuserProfile] = useState(initialUserProfile);
-  const [activeTab, setActiveTab] = useState('1');
+  const [activeTab, setActiveTab] = useState("1");
+  const { push } = useHistory();
 
   useEffect(() => {
     formSchema.isValid(loginData).then((valid) => {
@@ -141,69 +139,72 @@ function App() {
       [name]: value,
     });
   };
-  
-  const onSymptomsCheckboxChange = evt => {
-    const { name } = evt.target
-    const { checked } = evt.target
+
+  const onSymptomsCheckboxChange = (evt) => {
+    const { name } = evt.target;
+    const { checked } = evt.target;
     setformData({
       ...formData,
       questionnaire: {
         ...formData.questionnaire,
         symptoms: {
-          ...formData.questionnaire.symptoms, 
-          [name]: checked, 
-        }
-      }
-    })
-  }
+          ...formData.questionnaire.symptoms,
+          [name]: checked,
+        },
+      },
+    });
+  };
 
-  const onRaceRadioChange = evt => {
-    const { name } = evt.target
-    const { value } = evt.target
+  const onRaceRadioChange = (evt) => {
+    const { name } = evt.target;
+    const { value } = evt.target;
     setformData({
       ...formData,
       questionnaire: {
         ...formData.questionnaire,
         race: {
-          ...formData.questionnaire.race, 
-          [name]: value, 
-        }
-      }
-    })
-  }
+          ...formData.questionnaire.race,
+          [name]: value,
+        },
+      },
+    });
+  };
 
-  const onFlavorCheckboxChange = evt => {
-    const { name } = evt.target
-    const { checked } = evt.target
+  const onFlavorCheckboxChange = (evt) => {
+    const { name } = evt.target;
+    const { checked } = evt.target;
     setformData({
       ...formData,
       questionnaire: {
         ...formData.questionnaire,
         flavor: {
-          ...formData.questionnaire.flavor, 
-          [name]: checked, 
-        }
-      }
-    })
-  }
+          ...formData.questionnaire.flavor,
+          [name]: checked,
+        },
+      },
+    });
+  };
 
-  const sendData = loginData => {
-    axios.post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
-    .then(data => {
-      console.log(data);
-      debugger
-    })
-    .catch(err => {
-      console.log(err);
-      debugger
-    })
-  }
+  const sendData = (loginData) => {
+    axios
+      .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("token", res.data.token);
+        push("/Protected");
+        // debugger;
+      })
+      .catch((err) => {
+        console.log(err);
+        debugger;
+      });
+  };
 
   const loginSubmit = (event) => {
     event.preventDefault();
 
     const loginDatas = {
-      username: loginData.email,
+      username: loginData.username,
       password: loginData.password,
     };
 
@@ -222,16 +223,16 @@ function App() {
             <Browse></Browse>
           </Route>
           <Route path={`/Questionnaire`}>
-            <Questionnaire 
+            <Questionnaire
               values={formData}
               errors={formErrors}
               onInputChange={onInputChange}
-              activeTab={activeTab} 
+              activeTab={activeTab}
               setActiveTab={setActiveTab}
               onSymptomsCheckboxChange={onSymptomsCheckboxChange}
               onRaceRadioChange={onRaceRadioChange}
               onFlavorCheckboxChange={onFlavorCheckboxChange}
-              ></Questionnaire>
+            ></Questionnaire>
           </Route>
           <Route path={"/Login"}>
             <Login
@@ -244,7 +245,7 @@ function App() {
           <Route path="/Registration">
             <Registration />
           </Route>
-          <ProtectedRoute path="/Protected" component={<TEST />} />
+          <ProtectedRoute path="/Protected" component={TEST} />
         </Switch>
       </div>
     </div>
