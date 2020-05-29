@@ -71,19 +71,35 @@ const initialFormErrors = {
   tos: ""
 };
 
+const initialStrainData = [
+  {
+    effects: {
+      medical: ["Depression", "Insomnia", "Pain", "Stress", "Lack of Appetite",], 
+      negative: ["Dizzy",], 
+      positive: ["Relaxed", "Hungry", "Happy", "Sleepy",]
+    },
+    flavors: ["Earthy", "Chemical", "pine",],
+    id: 1,
+    name: "Afpak",
+    race: "hybrid"},
+]
 
 const initialDisabled = true;
 
 function App() {
-  // const [loginData, setloginData] = useState(initialLoginData);
   const [formData, setformData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
   const [disabled2, setDisabled2] = useState(initialDisabled)
-  // const [userProfile, setuserProfile] = useState(initialUserProfile);
   const [activeTab, setActiveTab] = useState("1");
   const [activeTab2, setActiveTab2] = useState("1");
+  const [strainData, setstrainData] = useState(initialStrainData);
   const { push } = useHistory();
+
+  useEffect(() => {
+    getStrains();
+    
+  },[]);
 
   useEffect(() => {
     formSchema.isValid(formData).then((valid) => {
@@ -93,6 +109,19 @@ function App() {
       setDisabled2(!valid);
     });
   }, [formData]);
+
+  function getStrains () {
+    axios.get("https://med-cabinet1.herokuapp.com/api/strains")
+    .then( data => {
+      setstrainData(data.data)
+    })
+    
+    .catch( error => {
+      console.log(error);
+      debugger
+    })
+
+  }
 
   const onInputChange = (event) => {
     const { name } = event.target;
@@ -206,7 +235,6 @@ function App() {
         console.log(res);
         localStorage.setItem("token", res.data.token);
         push("/Protected");
-        // debugger;
       })
       .catch((err) => {
         console.log(err);
@@ -264,8 +292,8 @@ function App() {
     sendData(questionnaireData);
   };
 
-  const submitHandle = (e) => { //please adjust as needed
-    e.preventDefault();         //
+  const submitHandle = (e) => {
+    e.preventDefault();
     debugger
     postNewUser(formData);
   };
@@ -279,7 +307,10 @@ function App() {
             <Home></Home>
           </Route>
           <Route path={`/Browse`}>
-            <Browse></Browse>
+            <Browse
+            strainData={strainData}
+            id="browse"
+            />
           </Route>
           <Route path={`/Questionnaire`}>
             <Questionnaire
