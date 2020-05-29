@@ -26,7 +26,7 @@ body {
   background-position: center; 
   background-repeat: no-repeat; 
   background-size: cover; 
-  height: 150vh;
+  height: 175vh;
 }
 
 .wrapper {
@@ -65,10 +65,15 @@ h1 {
   align-items: center;
 }
 
-.helpH2 {
+.wrapper .helpH2 {
   font-size: 225%;
-  width: 50%;
+  /* width: 50%; */
   font-weight: bold;
+  justify-content: flex-end;
+}
+
+.thcHelp img {
+  width: 25%;
 }
 
 .homeWrapper {
@@ -171,8 +176,20 @@ h1 {
   justify-content: flex-start;
 }
 
+.wrapper .card {
+  background-color:  #e6be8a;
+}
+
 .wrapper .card-title {
   font-size: 300%;
+}
+
+.h5 {
+  border-bottom: 1px solid black;
+}
+
+.h5 h5 {
+  font-size: 50%;
 }
 
 .wrapper .carousel-control-prev-icon, .wrapper .carousel-control-next-icon {
