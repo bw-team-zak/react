@@ -11,11 +11,13 @@ export default function Home(props) {
     */
 
         return [<div><p>filler data <br></br>
-            card</p></div>, <div><p>filler data <br></br>
-    card</p></div>, <div><p>filler data <br></br>
-    card</p></div>, <div><p>filler data <br></br>
-    card</p></div>, <div><p>filler data <br></br>
-    card</p></div>]
+            card</p></div>
+    //         , <div><p>filler data <br></br>
+    // card</p></div>, <div><p>filler data <br></br>
+    // card</p></div>, <div><p>filler data <br></br>
+    // card</p></div>, <div><p>filler data <br></br>
+    // card</p></div>
+    ]
     }
 
     return (
@@ -52,7 +54,7 @@ export default function Home(props) {
             </div>
             <div className="rec">
                 <p className="yourRec">Your Recommendations :</p>
-                <Recs></Recs>
+                {/* <Recs></Recs> */}
             </div>
         </div>
     )
