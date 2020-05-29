@@ -222,3 +222,18 @@ h6 {
   border: 1px solid black;
   border-style: solid none none none;
 }
+
+@media (max-width:620px) {
+  .wrapper .btn {
+    font-size: 8px;
+  }
+  .quest {
+    font-size: 60%;
+  }
+  .homeWrapper {
+    font-size: 80%;
+  }
+  .wrapper .helpH2 {
+    font-size: 150%;
+  }
+}
