@@ -6,7 +6,7 @@ export default function MyPagination(props) {
     const {currentPageNum, setcurrentPageNum} = props;
 
     return (
-        <Pagination aria-label="Page navigation">
+        <Pagination size="sm" aria-label="Page navigation">
         <PaginationItem>
             <PaginationLink first href="#browse" onClick={ event => {
              setcurrentPageNum(1)
