@@ -1,6 +1,6 @@
 # MED CABINET1 BUILD
 
-[Hosted Site]([https://react-nu.now.sh](https://react-nu.now.sh/))
+[Hosted Site](https://react-nu.now.sh)
 
 
 ### *Dev* Install 
