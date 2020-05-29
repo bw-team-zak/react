@@ -41,10 +41,10 @@ body {
   padding-bottom: 1%;
   margin-bottom: 2%;
   border-bottom: 1px solid black;
+  margin: 0% 3%;
 }
 
 .logo {
-  margin: 0% 3%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -150,32 +150,24 @@ h1 {
   word-wrap: normal;
 }
 
-.strainEffect div {
-  /* margin: 0% 0.1%; */
-}
-
 .strainEffect:first-child {
   border-top: 1px solid black;
   justify-content: flex-start;
 }
 
 .strainEffect:nth-child(2) {
-  /* border-top: 1px solid black; */
   justify-content: center;
 }
 
 .strainEffect:nth-child(3) {
-  /* border-top: 1px solid black; */
   justify-content: flex-end;
 }
 
 .strainEffect:nth-child(4) {
-  /* border-top: 1px solid black; */
   justify-content: center;
 }
 
 .strainEffect:last-child {
-  /* border-top: 1px solid black; */
   justify-content: flex-start;
 }
 
@@ -186,4 +178,20 @@ h1 {
 .wrapper .carousel-control-prev-icon, .wrapper .carousel-control-next-icon {
   background-color: gray;
   opacity: .5;
+}
+
+.transitions-item {
+  overflow: hidden;
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 225%;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity, height;
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 80px;
 }

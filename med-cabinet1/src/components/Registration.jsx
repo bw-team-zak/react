@@ -117,7 +117,7 @@ const Registration = (props) => {
                 Have you experienced the effects of cannabis before?
                 <br />
                 <select onChange={onInputChange} name="experienced">
-                  <option disabled defaultValue="Select" value>
+                  <option disabled selected value>
                     Select
                   </option>
                   <option 
