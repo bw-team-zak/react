@@ -341,6 +341,10 @@ function App() {
           </Route>
           <ProtectedRoute path="/Protected" component={TEST} />
         </Switch>
+        <h6>
+          Search for strains near you with Google!
+        </h6>
+        <div class="gcse-search"></div>
       </div>
     </div>
   );
