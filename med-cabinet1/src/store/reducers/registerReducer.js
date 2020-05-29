@@ -1,6 +1,6 @@
 import { REGISTER_START } from "../../actions/registerAction";
 import { REGISTER_200 } from "../../actions/registerAction";
-import { REGISTER_404 } from "../../actions/registerAction";
+import { REGISTER_ERROR } from "../../actions/registerAction";
 
 const initState = {
   userInfo: {},
@@ -21,7 +21,7 @@ export const registerReducer = (state = initState, action) => {
         isRegistering: false,
         userInfo: action.payload,
       };
-    case REGISTER_404:
+    case REGISTER_ERROR:
       return {
         ...state,
         isRegistering: false,

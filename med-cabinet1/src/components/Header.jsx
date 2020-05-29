@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <div className="header">
       <div className="logo">
-        <img src={logo} alt=""/>
+        <img src={logo} alt="" />
         <h1>MED CABINET 1</h1>
       </div>
       <Navbar>

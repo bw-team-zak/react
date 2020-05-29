@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_200 = "REGISTER_200";
-export const REGISTER_404 = "REGISTER_404";
+export const REGISTER_ERROR = "REGISTER_ERROR";
 
 export const postNewUser = (user) => (dispatch) => {
   dispatch({ type: REGISTER_START });
@@ -10,7 +10,7 @@ export const postNewUser = (user) => (dispatch) => {
   const User = {
     username: user.username,
     password: user.password,
-    med_condition: null,
+    location: user.location,
     age: user.age,
     experienced: user.experienced,
   };
@@ -24,7 +24,7 @@ export const postNewUser = (user) => (dispatch) => {
     .catch((er) => {
       console.log("Something went wrong", er.response.data);
       dispatch({
-        type: REGISTER_404,
+        type: REGISTER_ERROR,
         payload: er,
       });
     });

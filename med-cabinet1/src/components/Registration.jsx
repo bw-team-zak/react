@@ -23,16 +23,16 @@ import {
 // };
 
 const Registration = (props) => {
-
   // const [form, setForm] = useState(initForm); // going to keep all state for forms in 1
-  const { 
+  const {
     values,
-    postNewUser, 
-    onInputChange, 
-    errors, 
-    disabled, 
-    submitHandle, 
-    onCheckboxChange } = props;
+    postNewUser,
+    onInputChange,
+    errors,
+    disabled,
+    submitHandle,
+    onCheckboxChange,
+  } = props;
 
   // const changeHandle = (e) => {    //going to pass down the event handler
   //   const name = e.target.name;    // that was in app.js
@@ -106,9 +106,11 @@ const Registration = (props) => {
                         {location}
                       </option>
                     ) : (
-                      <option 
+                      <option
                       // value={values.location}
-                      >{location}</option>
+                      >
+                        {location}
+                      </option>
                     );
                   })}
                 </select>
@@ -141,12 +143,8 @@ const Registration = (props) => {
                   <option disabled selected value>
                     Select
                   </option>
-                  <option 
-                  // value={true}
-                  >Yes</option>
-                  <option 
-                  // value={false}
-                  >No</option>
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
                 </select>
               </Label>
             </FormGroup>
@@ -172,4 +170,4 @@ const Registration = (props) => {
   );
 };
 
-export default connect(null, { postNewUser })(Registration);
+export default Registration;
