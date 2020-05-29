@@ -80,23 +80,23 @@ export default function Browse(props) {
                     <CardSubtitle>Race: {item.race}</CardSubtitle>
                     <div key={item.id}>
                         <div className="strainEffect">
-                            <div><h5>Used to treat the following medical conditions:</h5></div>
+                            <div  className="h5"><h5>Used to treat the following medical conditions:</h5></div>
                             <div className="lists">{medicalList}</div>   
                         </div>            
                         <div className="strainEffect">
-                            <div><h5>Reported negative side effects:</h5></div>
+                            <div  className="h5"><h5>Reported negative side effects:</h5></div>
                             <div className="lists">{negativeList}</div>
                         </div>
                         <div className="strainEffect">
-                            <div><h5>Reported positive side effects:</h5></div>
+                            <div  className="h5"><h5>Reported positive side effects:</h5></div>
                             <div className="lists">{positiveList}</div>
                         </div>
                         <div className="strainEffect">
-                            <div><h5>Associated flavor profiles:</h5></div>
+                            <div  className="h5"><h5>Associated flavor profiles:</h5></div>
                             <div className="lists">{flavorList}</div>
                         </div>
                         <div className="strainEffect">
-                            <div><h5>Description:</h5></div>
+                            <div  className="h5"><h5>Description:</h5></div>
                             <div className="lists">description here</div>
                         </div>
                     </div>
