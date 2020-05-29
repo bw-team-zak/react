@@ -9,6 +9,7 @@ const Home = (props) => {
     FROM THE DATA PASSED INTO PROPS
     */
 
+
     return [
       <div>
         <p>

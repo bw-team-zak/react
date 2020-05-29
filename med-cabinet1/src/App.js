@@ -73,20 +73,49 @@ const initialFormErrors = {
   tos: "",
 };
 
+
+// const initialDisabled = true;
+
+// function App(props) {
+//   // const [loginData, setloginData] = useState(initialLoginData);
+//   const [formData, setformData] = useState(initialFormData);
+//   const [formErrors, setFormErrors] = useState(initialFormErrors);
+//   const [disabled, setDisabled] = useState(initialDisabled);
+//   const [disabled2, setDisabled2] = useState(initialDisabled);
+//   // const [userProfile, setuserProfile] = useState(initialUserProfile);
+
+const initialStrainData = [
+  {
+    effects: {
+      medical: ["Depression", "Insomnia", "Pain", "Stress", "Lack of Appetite",], 
+      negative: ["Dizzy",], 
+      positive: ["Relaxed", "Hungry", "Happy", "Sleepy",]
+    },
+    flavors: ["Earthy", "Chemical", "pine",],
+    id: 1,
+    name: "Afpak",
+    race: "hybrid"},
+]
+
 const initialDisabled = true;
 
-function App(props) {
-  // const [loginData, setloginData] = useState(initialLoginData);
+function App() {
   const [formData, setformData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
-  const [disabled2, setDisabled2] = useState(initialDisabled);
-  // const [userProfile, setuserProfile] = useState(initialUserProfile);
+  const [disabled2, setDisabled2] = useState(initialDisabled)
+
   const [activeTab, setActiveTab] = useState("1");
   const [activeTab2, setActiveTab2] = useState("1");
+  const [strainData, setstrainData] = useState(initialStrainData);
   const { push } = useHistory();
   const params = useParams();
   const { postNewUser, userLogin, userInfo, feedbackAction } = props;
+
+  useEffect(() => {
+    getStrains();
+    
+  },[]);
 
   useEffect(() => {
     formSchema.isValid(formData).then((valid) => {
@@ -96,6 +125,19 @@ function App(props) {
       setDisabled2(!valid);
     });
   }, [formData]);
+
+  function getStrains () {
+    axios.get("https://med-cabinet1.herokuapp.com/api/strains")
+    .then( data => {
+      setstrainData(data.data)
+    })
+    
+    .catch( error => {
+      console.log(error);
+      debugger
+    })
+
+  }
 
   const onInputChange = (event) => {
     const { name } = event.target;
@@ -201,6 +243,7 @@ function App(props) {
     });
   };
 
+
   // const sendFeedback = (feedback) => {
   //   // console.log(loginData);
   //   axiosWithAuth()
@@ -216,6 +259,21 @@ function App(props) {
   //       // debugger;
   //     });
   // };
+
+//   const sendData = (loginData) => {
+//     axios
+//       .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
+//       .then((res) => {
+//         debugger
+//         console.log(res);
+//         localStorage.setItem("token", res.data.token);
+//         push("/Protected");
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         debugger;
+//       });
+//   };
 
   const loginSubmit = (event) => {
     event.preventDefault();
@@ -274,6 +332,7 @@ function App(props) {
     e.preventDefault(); //
     // debugger
     console.log(formData);
+
     postNewUser(formData);
   };
 
@@ -286,7 +345,26 @@ function App(props) {
             <Home />
           </Route>
           <Route path={`/Browse`}>
-            <Browse />
+
+            <Browse
+            strainData={strainData}
+            setstrainData={setstrainData}
+            id="browse"
+            />
+          </Route>
+          <Route path={`/Questionnaire`}>
+            <Questionnaire
+              values={formData}
+              errors={formErrors}
+              onInputChange={onInputChange}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              onSymptomsCheckboxChange={onSymptomsCheckboxChange}
+              onRaceRadioChange={onRaceRadioChange}
+              onFlavorCheckboxChange={onFlavorCheckboxChange}
+              questionnaireSubmit={questionnaireSubmit}
+            ></Questionnaire>
+
           </Route>
 
           <Route
@@ -322,6 +400,10 @@ function App(props) {
           </Route>
           <ProtectedRoute path="/Protected" component={TEST} />
         </Switch>
+        <h6>
+          Search for strains near you with Google!
+        </h6>
+        <div class="gcse-search"></div>
       </div>
     </div>
   );

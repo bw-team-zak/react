@@ -1,22 +1,41 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import MyPagination from "./Pagination"
+import {
+    Card, 
+    // Collapse, 
+    // CardText, 
+    CardBody,
+    CardTitle, 
+    CardSubtitle, 
+    Button,
+    // Container,
+    Carousel,
+    CarouselItem,
+    CarouselControl,
+    // CarouselIndicators,
+    // CarouselCaption
+  } from 'reactstrap';
 
-export default function Browse() {
-  const [strains, setStrains] = useState(null);
-  const params = useParams();
+export default function Browse(props) {
 
-  const getStrains = () => {
+    const {strainData,setstrainData} = props;
+
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [animating, setAnimating] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [currentPageNum, setcurrentPageNum] = useState(1);
+    
+    const getStrains = () => {
     axios.get("https://med-cabinet1.herokuapp.com/api/strains").then((res) => {
       console.log(res.data);
-      setStrains(res.data);
+      setstrainData(res.data);
     });
   };
-  useEffect(() => {
-    getStrains();
-  }, []);
-
-  const deleteStrain = (e) => {
+    
+    const deleteStrain = (e) => {
     console.log(e.target.id);
     axios
       .delete(`https://med-cabinet1.herokuapp.com/api/strains/${e.target.id}`)
@@ -28,31 +47,115 @@ export default function Browse() {
         console.log(er);
       });
   };
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
-      <h1 style={{ width: "100%" }}>BROWSE ALL</h1>
-      {!strains ? (
-        <p>fetching strains...</p>
-      ) : (
-        strains.map((strain) => {
-          return (
-            <div style={{ width: "25%" }}>
-              <label>
-                <p
-                  id={strain.id}
+
+    let indexNum = currentPageNum - 1;
+
+    const toggle = () => setIsOpen(!isOpen);
+
+    const next = () => {
+        if (animating) return;
+        const nextIndex = activeIndex === strainPages[0].length - 1 ? 0 : activeIndex + 1;
+        setActiveIndex(nextIndex);
+      }
+    
+    const previous = () => {
+        if (animating) return;
+        const nextIndex = activeIndex === 0 ? strainPages[0].length - 1 : activeIndex - 1;
+        setActiveIndex(nextIndex);
+      }
+    
+    const goToIndex = (newIndex) => {
+        if (animating) return;
+        setActiveIndex(newIndex);
+      }
+
+
+    const splitArray = (arr, size) =>
+    Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+        arr.slice(i * size, i * size + size)
+    );
+
+    const strainPages = splitArray(strainData, 20);
+
+    const strainCards = strainPages[indexNum].map( (item, index) => {
+        let medicalList = item.effects.medical.map( (item, index) => {
+            return (<div key={index}>{item}</div>)
+        })
+        let negativeList = item.effects.negative.map( (item, index) => {
+            return (<div key={index}>{item}</div>)
+        })
+        let positiveList = item.effects.positive.map( (item, index) => {
+            return (<div key={index}>{item}</div>)
+        })
+        let flavorList = item.flavors.map( (item, index) => {
+            return (<div key={index}>{item}</div>)
+        })
+        return (
+            <CarouselItem
+            className="strains"
+            onExiting={() => setAnimating(true)}
+            onExited={() => setAnimating(false)}
+            key={item.id}
+            >
+                <Card>
+                <CardBody>
+                    <p
+                  id={item.id}
                   onClick={(e) => {
                     deleteStrain(e);
                   }}
                 >
                   🗑
                 </p>
-                <span style={{ fontWeight: "bold" }}>Strain Name:</span>
-                <p>{strain.name}</p>
-              </label>
-            </div>
-          );
-        })
-      )}
-    </div>
-  );
+                    <CardTitle>Name: {item.name}</CardTitle>
+                    <CardSubtitle>Race: {item.race}</CardSubtitle>
+                    <div key={item.id}>
+                        <div className="strainEffect">
+                            <div  className="h5"><h5>Used to treat the following medical conditions:</h5></div>
+                            <div className="lists">{medicalList}</div>   
+                        </div>            
+                        <div className="strainEffect">
+                            <div  className="h5"><h5>Reported negative side effects:</h5></div>
+                            <div className="lists">{negativeList}</div>
+                        </div>
+                        <div className="strainEffect">
+                            <div  className="h5"><h5>Reported positive side effects:</h5></div>
+                            <div className="lists">{positiveList}</div>
+                        </div>
+                        <div className="strainEffect">
+                            <div  className="h5"><h5>Associated flavor profiles:</h5></div>
+                            <div className="lists">{flavorList}</div>
+                        </div>
+                        <div className="strainEffect">
+                            <div  className="h5"><h5>Description:</h5></div>
+                            <div className="lists">description here</div>
+                        </div>
+                    </div>
+                    <Button>Favorite</Button>
+                </CardBody>
+                </Card>
+            </CarouselItem>
+        );
+    });
+
+    return (
+        <div className="cara">
+            <h2>Browse All Strains:</h2>
+            <div><h7>(20 per page)</h7></div>
+            <Carousel
+            activeIndex={activeIndex}
+            next={next}
+            previous={previous}
+            >
+            {/* <CarouselIndicators items={strainPages} activeIndex={activeIndex} onClickHandler={goToIndex} /> */}
+            {strainCards}
+            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+            </Carousel>
+            <MyPagination
+            currentPageNum={currentPageNum} 
+            setcurrentPageNum={setcurrentPageNum}></MyPagination>
+        </div>
+    )
 }
+

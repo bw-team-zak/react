@@ -13,18 +13,8 @@ import {
   Button,
 } from "reactstrap";
 
-// const initForm = {  // going to keep all state for forms in 1
-//   username: "",
-//   password: "",
-//   location: "",
-//   med_condition: null,
-//   age: "",
-//   experienced: null,
-// };
-
 const Registration = (props) => {
-  // const [form, setForm] = useState(initForm); // going to keep all state for forms in 1
-  const {
+  const { 
     values,
     postNewUser,
     onInputChange,
@@ -33,20 +23,6 @@ const Registration = (props) => {
     submitHandle,
     onCheckboxChange,
   } = props;
-
-  // const changeHandle = (e) => {    //going to pass down the event handler
-  //   const name = e.target.name;    // that was in app.js
-  //   const value = e.target.value;
-  //   setForm({
-  //     ...form,
-  //     [name]: value,
-  //   });
-  // };
-
-  // const submitHandle = (e) => { // going to move to app.js and pass down through props
-  //   e.preventDefault();        //
-  //   postNewUser(form);
-  // };
 
   return (
     <Container className="registration">
@@ -71,7 +47,6 @@ const Registration = (props) => {
                   name="username"
                   id="username"
                   placeholder="Choose a username"
-                  // value={values.username}
                   onChange={onInputChange}
                 />
               </Label>
@@ -87,7 +62,6 @@ const Registration = (props) => {
                   name="password"
                   id="password"
                   placeholder="Choose a password"
-                  // value={values.password}
                   onChange={onInputChange}
                 />
               </Label>
@@ -112,6 +86,7 @@ const Registration = (props) => {
                         {location}
                       </option>
                     );
+
                   })}
                 </select>
               </Label>
@@ -127,7 +102,6 @@ const Registration = (props) => {
                   max="150"
                   type="number"
                   name="age"
-                  // value={values.age}
                   onChange={onInputChange}
                 />
               </Label>
@@ -143,8 +117,10 @@ const Registration = (props) => {
                   <option disabled selected value>
                     Select
                   </option>
+<!-- <<<<<<< fix-login/reg -->
                   <option value={true}>Yes</option>
                   <option value={false}>No</option>
+
                 </select>
               </Label>
             </FormGroup>
@@ -157,7 +133,6 @@ const Registration = (props) => {
                 <Input
                   type="checkbox"
                   name="tos"
-                  // checked={values.tos}
                   onChange={onCheckboxChange}
                 />
               </Label>
