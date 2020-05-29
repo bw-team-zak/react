@@ -14,14 +14,15 @@ import {
 } from "reactstrap";
 
 const Registration = (props) => {
-  const { 
+  const {
     values,
-    postNewUser, 
-    onInputChange, 
-    errors, 
-    disabled, 
-    submitHandle, 
-    onCheckboxChange } = props;
+    postNewUser,
+    onInputChange,
+    errors,
+    disabled,
+    submitHandle,
+    onCheckboxChange,
+  } = props;
 
   return (
     <Container className="registration">
@@ -74,22 +75,17 @@ const Registration = (props) => {
                 <br />
                 <select onChange={onInputChange} name="location">
                   {locations.map((location, index) => {
-                    return (<option 
-                      defaultValue="Location"
-                      key={index} 
-                      >{location}</option>);
-                    // index === 0 ? (
-                    //   <option key={index} disabled selected value>
-                    //     {location}
-                    //   </option>
-                    // ) : 
-                    // (
-                    //   <option 
-                    //   defaultValue="Location"
-                    //   key={index} 
-                    //   // value={values.location}
-                    //   >{location}</option>
-                    // );
+                    return index === 0 ? (
+                      <option disabled selected value>
+                        {location}
+                      </option>
+                    ) : (
+                      <option
+                      // value={values.location}
+                      >
+                        {location}
+                      </option>
+                    );
                   })}
                 </select>
               </Label>
@@ -120,10 +116,8 @@ const Registration = (props) => {
                   <option disabled selected value>
                     Select
                   </option>
-                  <option 
-                  >Yes</option>
-                  <option 
-                  >No</option>
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
                 </select>
               </Label>
             </FormGroup>
@@ -133,11 +127,7 @@ const Registration = (props) => {
               <Label>
                 Do you accept the TOS?
                 <br />
-                <Input
-                  type="checkbox"
-                  name="tos"
-                  onChange={onCheckboxChange}
-                />
+                <Input type="checkbox" name="tos" onChange={onCheckboxChange} />
               </Label>
             </FormGroup>
           </Col>
@@ -148,4 +138,4 @@ const Registration = (props) => {
   );
 };
 
-export default connect(null, { postNewUser })(Registration);
+export default Registration;
