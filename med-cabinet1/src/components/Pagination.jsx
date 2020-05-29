@@ -14,9 +14,11 @@ export default function MyPagination(props) {
           </PaginationItem>
           <PaginationItem>
             <PaginationLink previous href="#browse" onClick={ event => {
+              if (currentPageNum === 1) {
+                event.preventDefault()
+                return
+              }
               setcurrentPageNum(currentPageNum - 1);
-              if (currentPageNum === 0) {setcurrentPageNum(1)}
-            //   currentPageNum === 0 ? setcurrentPageNum(1): 1+1
             }}/>
           </PaginationItem>
           <PaginationItem>

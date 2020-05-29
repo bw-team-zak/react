@@ -110,7 +110,7 @@ export default function Browse(props) {
     return (
         <div className="cara">
             <h2>Browse All Strains:</h2>
-            <div><h6>(20 per page)</h6></div>
+            <div><h7>(20 per page)</h7></div>
             <Carousel
             activeIndex={activeIndex}
             next={next}
