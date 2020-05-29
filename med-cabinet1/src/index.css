@@ -212,3 +212,13 @@ h1 {
   cursor: pointer;
   line-height: 80px;
 }
+
+.gsc-control-cse, .gsc-control-cse-en {
+  background-color: transparent;
+  border: 1px none black;
+}
+
+h6 {
+  border: 1px solid black;
+  border-style: solid none none none;
+}
