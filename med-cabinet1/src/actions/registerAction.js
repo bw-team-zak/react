@@ -10,10 +10,11 @@ export const postNewUser = (user) => (dispatch) => {
   const User = {
     username: user.username,
     password: user.password,
-    med_condition: null,
+    location: user.location,
     age: user.age,
     experienced: user.experienced,
   };
+  console.log("this is the user", User);
 
   axios
     .post("https://med-cabinet1.herokuapp.com/api/users/register", User)

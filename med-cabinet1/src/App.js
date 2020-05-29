@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import * as yup from "yup";
@@ -15,6 +15,9 @@ import Questionnaire from "./components/questionnaire";
 import Browse from "./components/Browse";
 import { postNewUser } from "./actions/registerAction";
 import LoginRegistration from "./components/LoginRegistration";
+import { connect } from "react-redux";
+import { axiosWithAuth } from "./utils/axiosWithAuth";
+import { userLogin, feedbackAction } from "./actions/loginAction";
 
 const initialFormData = {
   username: "",
@@ -22,7 +25,6 @@ const initialFormData = {
   password: "",
   passwordLogin: "",
   location: "",
-  med_condition: null,
   age: "",
   experienced: null,
   tos: "",
@@ -57,8 +59,8 @@ const initialFormData = {
       pungent: false, // should include chemicalm ammonia, deisel, skunky, cheese
       nutty: false,
       minty: false,
-    }
-  }
+    },
+  },
 };
 
 const initialFormErrors = {
@@ -68,38 +70,40 @@ const initialFormErrors = {
   med_condition: null,
   age: "",
   experienced: null,
-  tos: ""
+  tos: "",
 };
 
 const initialStrainData = [
   {
     effects: {
-      medical: ["Depression", "Insomnia", "Pain", "Stress", "Lack of Appetite",], 
-      negative: ["Dizzy",], 
-      positive: ["Relaxed", "Hungry", "Happy", "Sleepy",]
+      medical: ["Depression", "Insomnia", "Pain", "Stress", "Lack of Appetite"],
+      negative: ["Dizzy"],
+      positive: ["Relaxed", "Hungry", "Happy", "Sleepy"],
     },
-    flavors: ["Earthy", "Chemical", "pine",],
+    flavors: ["Earthy", "Chemical", "pine"],
     id: 1,
     name: "Afpak",
-    race: "hybrid"},
-]
+    race: "hybrid",
+  },
+];
 
 const initialDisabled = true;
 
-function App() {
+function App(props) {
   const [formData, setformData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
-  const [disabled2, setDisabled2] = useState(initialDisabled)
+  const [disabled2, setDisabled2] = useState(initialDisabled);
   const [activeTab, setActiveTab] = useState("1");
   const [activeTab2, setActiveTab2] = useState("1");
   const [strainData, setstrainData] = useState(initialStrainData);
   const { push } = useHistory();
+  const params = useParams();
+  const { postNewUser, userLogin, userInfo, feedbackAction } = props;
 
   useEffect(() => {
     getStrains();
-    
-  },[]);
+  }, []);
 
   useEffect(() => {
     formSchema.isValid(formData).then((valid) => {
@@ -110,17 +114,17 @@ function App() {
     });
   }, [formData]);
 
-  function getStrains () {
-    axios.get("https://med-cabinet1.herokuapp.com/api/strains")
-    .then( data => {
-      setstrainData(data.data)
-    })
-    
-    .catch( error => {
-      console.log(error);
-      debugger
-    })
+  function getStrains() {
+    axios
+      .get("https://med-cabinet1.herokuapp.com/api/strains")
+      .then((data) => {
+        setstrainData(data.data);
+      })
 
+      .catch((error) => {
+        console.log(error);
+        debugger;
+      });
   }
 
   const onInputChange = (event) => {
@@ -227,35 +231,37 @@ function App() {
     });
   };
 
-  const sendData = (loginData) => {
-    axios
-      .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
-      .then((res) => {
-        debugger
-        console.log(res);
-        localStorage.setItem("token", res.data.token);
-        push("/Protected");
-      })
-      .catch((err) => {
-        console.log(err);
-        debugger;
-      });
-  };
+  // const sendData = (loginData) => {
+  //   axios
+  //     .post("https://med-cabinet1.herokuapp.com/api/users/login?", loginData)
+  //     .then((res) => {
+  //       debugger
+  //       console.log(res);
+  //       localStorage.setItem("token", res.data.token);
+  //       push("/Protected");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       debugger;
+  //     });
+  // };
 
   const loginSubmit = (event) => {
     event.preventDefault();
 
     const loginDatas = {
-      username: formData.username,
-      password: formData.password,
+      username: formData.usernameLogin,
+      password: formData.passwordLogin,
     };
+    console.log(loginDatas);
 
-    sendData(loginDatas);
+    userLogin(loginDatas);
+    push("/Protected");
   };
 
   const questionnaireSubmit = (event) => {
     event.preventDefault();
-    debugger
+    // debugger;
     const questionnaireData = {
       symptoms: {
         pain: formData.questionnaire.symptoms.pain,
@@ -269,13 +275,13 @@ function App() {
         inflammation: formData.questionnaire.symptoms.inflammation,
         seizure: formData.questionnaire.symptoms.seizures,
         other: formData.questionnaire.symptoms.other,
-        },
+      },
       race: {
         race1: formData.questionnaire.race.race1,
         race2: formData.questionnaire.race.race2,
         race3: formData.questionnaire.race.race3,
-        race4: formData.questionnaire.race.race4
-        },
+        // race4: formData.questionnaire.race.race4,
+      },
       flavor: {
         earthy: formData.questionnaire.flavor.earthy,
         spicy: formData.questionnaire.flavor.spicy,
@@ -285,31 +291,34 @@ function App() {
         pine: formData.questionnaire.flavor.pine,
         pungent: formData.questionnaire.flavor.pungent,
         nutty: formData.questionnaire.flavor.nutty,
-        minty: formData.questionnaire.flavor.minty
-      }
+        minty: formData.questionnaire.flavor.minty,
+      },
     };
 
-    sendData(questionnaireData);
+    feedbackAction(questionnaireData, userInfo.id);
   };
 
   const submitHandle = (e) => {
-    e.preventDefault();
-    debugger
+    //please adjust as needed
+    e.preventDefault(); //
+    // debugger
+    console.log(formData);
     postNewUser(formData);
   };
 
   return (
     <div className="App">
       <div className="wrapper">
-        <Header></Header>
+        <Header />
         <Switch>
           <Route exact path={`/`}>
-            <Home></Home>
+            <Home />
           </Route>
           <Route path={`/Browse`}>
             <Browse
-            strainData={strainData}
-            id="browse"
+              strainData={strainData}
+              setstrainData={setstrainData}
+              id="browse"
             />
           </Route>
           <Route path={`/Questionnaire`}>
@@ -325,6 +334,7 @@ function App() {
               questionnaireSubmit={questionnaireSubmit}
             ></Questionnaire>
           </Route>
+
           <Route path={"/LoginRegistration"}>
             <LoginRegistration
               loginSubmit={loginSubmit}
@@ -332,22 +342,26 @@ function App() {
               onInputChangeRegistration={onInputChangeRegistration}
               errors={formErrors}
               disabled={disabled}
-              disabled2={disabled2} 
+              disabled2={disabled2}
               submitHandle={submitHandle}
               onCheckboxChange={onCheckboxChange}
               activeTab={activeTab2}
               setActiveTab={setActiveTab2}
-            ></LoginRegistration>
+            />
           </Route>
           <ProtectedRoute path="/Protected" component={TEST} />
         </Switch>
-        <h6>
-          Search for strains near you with Google!
-        </h6>
+        <h6>Search for strains near you with Google!</h6>
         <div class="gcse-search"></div>
       </div>
     </div>
   );
 }
+const mSTP = (state) => {
+  console.log(state);
+  return {
+    userInfo: state.loginReducer.userInfo,
+  };
+};
 
-export default App;
+export default connect(mSTP, { postNewUser, userLogin, feedbackAction })(App);
